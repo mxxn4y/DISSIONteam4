@@ -11,20 +11,37 @@ public class PlayerController : MonoBehaviour
     public float jumpPower = 5f;
     private bool canJump = true; //점프 검사
 
+    private bool canAttack = true;
+    public float attackSpeed = 5f; //공격 속도
+
+    public float hpMax = 100;
+    public float attackPower = 50;
+    public float hpNow = 100;
+
     // Start is called before the first frame update
     void Start()
     {
-        //animator = GetComponent<Animator>();
+        animator = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        //움직임 조작
         Move();
-        if (Input.GetKeyDown(KeyCode.Space) && canJump)
+
+        //공격
+        if (Input.GetMouseButtonDown(0) && canAttack)
         {
-            Jump();
+            Attack();
+            StartCoroutine(AttackCooldown()); //공격대기
+        }
+
+        //사망
+        if (hpNow <= 0)
+        {
+            Dead();
         }
 
     }
@@ -37,10 +54,15 @@ public class PlayerController : MonoBehaviour
         transform.LookAt(transform.position + moveVec);
 
         bool isMove = moveVec.magnitude != 0;
-        //animator.SetBool("isMove", isMove); //파라미터 bool형태~
+        animator.SetBool("isMove", isMove);
         if (isMove)
         {
-            //움직이는 경우
+            // 움직이는 경우
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space) && canJump)
+        {
+            Jump();
         }
     }
 
@@ -55,5 +77,22 @@ public class PlayerController : MonoBehaviour
         {
             canJump = true; //바닥에 있어야 점프 가능
         }
+    }
+
+    private void Attack() //공격
+    {
+        Debug.Log("공격을 받아랏~ ");
+    }
+
+    private IEnumerator AttackCooldown()
+    {
+        canAttack = false;
+        yield return new WaitForSeconds(attackSpeed);
+        canAttack = true;
+    }
+
+    private void Dead() //사망
+    {
+        Debug.Log("사망!");
     }
 }

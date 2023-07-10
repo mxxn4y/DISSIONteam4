@@ -19,6 +19,11 @@ public class EnemyController : MonoBehaviour
     private bool canAttack = true;
     public float attackSpeed = 5f; //공격 속도
 
+    public float hpMax = 100;
+    public float attackPower = 10;
+
+    PlayerController player;
+
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +37,8 @@ public class EnemyController : MonoBehaviour
 
         StartCoroutine(this.CheckState());
         StartCoroutine(this.CheckStateForAction());
+
+        player = GameObject.Find("Astronaut").GetComponent<PlayerController>();
     }
 
     IEnumerator CheckState() //상태 변경
@@ -86,6 +93,8 @@ public class EnemyController : MonoBehaviour
     {
         Debug.Log("공격!  " + this.gameObject.name);
         // 공격
+        player.hpNow -= attackPower;
+        Debug.Log("player now hp : " + player.hpNow);
     }
 
     private IEnumerator AttackCooldown()
