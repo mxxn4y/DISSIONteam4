@@ -5,9 +5,10 @@ using UnityEngine;
 public class CameraMovement : MonoBehaviour
 {
     public Transform followObject;
-    public float speed = 10f;
-    public float sensitivity = 100f;
-    public float clampAngle = 70f;      // 제한
+    public float speed = 10f;    
+    public float sensitivity = 200f;    // 감도. 변경o
+    public float clampAngleTop = 70f;      // 제한
+    public float clampAngleBottom = -10f;
 
     private float rotX;
     private float rotY;
@@ -34,10 +35,10 @@ public class CameraMovement : MonoBehaviour
     //Update is called once per frame
     void Update()
     {
-        rotX += Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;
-        rotY += Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
+        rotX += -Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;
+        rotY += -Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
 
-        rotX = Mathf.Clamp(rotX, -clampAngle, clampAngle);
+        rotX = Mathf.Clamp(rotX, 0f, clampAngleTop);
         Quaternion rot = Quaternion.Euler(rotX, rotY, 0);
         transform.rotation = rot;
     }
