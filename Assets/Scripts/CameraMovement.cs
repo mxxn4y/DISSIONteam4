@@ -36,7 +36,7 @@ public class CameraMovement : MonoBehaviour
     void Update()
     {
         rotX += -Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;
-        rotY += -Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
+        rotY += Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
 
         rotX = Mathf.Clamp(rotX, 0f, clampAngleTop);
         Quaternion rot = Quaternion.Euler(rotX, rotY, 0);
