@@ -53,9 +53,9 @@ public class PlayerController : MonoBehaviour
         transform.position += moveVec * moveSpeed * Time.deltaTime;
         transform.LookAt(transform.position + moveVec);
 
-        bool isMove = moveVec.magnitude != 0;
-        animator.SetBool("isMove", isMove);
-        if (isMove)
+        bool run = moveVec.magnitude != 0;
+        animator.SetBool("Run", run);
+        if (run)
         {
             // 움직이는 경우
         }
@@ -63,6 +63,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && canJump)
         {
             Jump();
+            animator.SetTrigger("Jump");
         }
     }
 
@@ -82,6 +83,7 @@ public class PlayerController : MonoBehaviour
     private void Attack() //공격
     {
         Debug.Log("공격을 받아랏~ ");
+        animator.SetTrigger("Attack"); ;
     }
 
     private IEnumerator AttackCooldown()

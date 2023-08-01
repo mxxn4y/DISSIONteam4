@@ -38,7 +38,7 @@ public class EnemyController : MonoBehaviour
         StartCoroutine(this.CheckState());
         StartCoroutine(this.CheckStateForAction());
 
-        player = GameObject.Find("Astronaut").GetComponent<PlayerController>();
+        player = GameObject.Find("LilRobot").GetComponent<PlayerController>();
     }
 
     IEnumerator CheckState() //상태 변경
