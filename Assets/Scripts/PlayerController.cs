@@ -5,10 +5,10 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 { 
     Rigidbody rigid;
-    Animator animator;
-
-    public float moveSpeed=10f;
-    public float jumpPower = 5f;
+    public Animator animator;
+    //움직임속도, 점프속도 조정 - 수진
+    public float moveSpeed;
+    public float jumpPower = 10f;
     private bool canJump = true; //점프 검사
 
     private bool canAttack = true;
@@ -50,15 +50,16 @@ public class PlayerController : MonoBehaviour
     {
 
         Vector3 moveVec = new Vector3(Input.GetAxis("Horizontal"),0, Input.GetAxis("Vertical")).normalized;
+        
+        //수진 - 움직임속도 설정
+        if (Input.GetKey(KeyCode.LeftShift)) moveSpeed = 8f;
+        else moveSpeed = 5f;
+        
         transform.position += moveVec * moveSpeed * Time.deltaTime;
         transform.LookAt(transform.position + moveVec);
 
-        bool isMove = moveVec.magnitude != 0;
-        animator.SetBool("isMove", isMove);
-        if (isMove)
-        {
-            // 움직이는 경우
-        }
+        animator.SetFloat("Speed", moveVec.magnitude*moveSpeed);
+        
 
         if (Input.GetKeyDown(KeyCode.Space) && canJump)
         {
@@ -68,6 +69,8 @@ public class PlayerController : MonoBehaviour
 
     private void Jump()
     {
+        //점프 애니메이션 추가 - 수진
+        animator.SetTrigger("Jump");
         rigid.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
         canJump = false;
     }
@@ -81,6 +84,8 @@ public class PlayerController : MonoBehaviour
 
     private void Attack() //공격
     {
+        //공격 애니메이션 추가 - 수진
+        animator.SetTrigger("Attack1");
         Debug.Log("공격을 받아랏~ ");
     }
 
@@ -93,6 +98,8 @@ public class PlayerController : MonoBehaviour
 
     private void Dead() //사망
     {
+        //사망 애니메이션추가 - 수진
+        animator.SetTrigger("Dead");
         Debug.Log("사망!");
     }
 }

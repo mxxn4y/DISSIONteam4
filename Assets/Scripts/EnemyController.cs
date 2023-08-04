@@ -38,7 +38,7 @@ public class EnemyController : MonoBehaviour
         StartCoroutine(this.CheckState());
         StartCoroutine(this.CheckStateForAction());
 
-        player = GameObject.Find("Astronaut").GetComponent<PlayerController>();
+        player = GameObject.Find("Player").GetComponent<PlayerController>(); //수진
     }
 
     IEnumerator CheckState() //상태 변경
@@ -94,6 +94,8 @@ public class EnemyController : MonoBehaviour
         Debug.Log("공격!  " + this.gameObject.name);
         // 공격
         player.hpNow -= attackPower;
+        //맞는 애니메이션 추가 - 수진
+        player.animator.SetTrigger("Hit");
         Debug.Log("player now hp : " + player.hpNow);
     }
 
