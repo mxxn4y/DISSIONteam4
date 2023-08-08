@@ -69,7 +69,7 @@ public class EnemyController : MonoBehaviour
             switch (curState)
             {
                 case CurrentState.idle: //멈춤(기본상태 - 배회) - 수진
-                    yield return new WaitForSeconds(10f);
+                    yield return new WaitForSeconds(3f);
                     curState = CurrentState.roaming;
                     break;
 
@@ -78,10 +78,12 @@ public class EnemyController : MonoBehaviour
                     break;
 
                 case CurrentState.trace: //추적
+                    transform.LookAt(playerTransform.position);
                     nvAgent.destination = playerTransform.position;
                     break;
 
                 case CurrentState.attack: //공격
+                    transform.LookAt(playerTransform.position);
                     if (canAttack)
                     {
                         Attack();
@@ -115,6 +117,9 @@ public class EnemyController : MonoBehaviour
     {
         while (true)
         {
+            //float waitTime = Random.Range(5f, 7f);
+            //yield return new WaitForSeconds(waitTime);
+
             Vector3 randomPosition = GetRandomRoamingPosition();
             float dist = Vector3.Distance(playerTransform.position, _transform.position);
 
@@ -134,10 +139,8 @@ public class EnemyController : MonoBehaviour
                 yield return null;
             }
 
-            // 걷는 애니메이션 flase, idle
+            // 걷는 애니메이션 false, idle
             // 걷는 애니메이션 true
-            yield return new WaitForSeconds(3f);
-
         }
     }
 
