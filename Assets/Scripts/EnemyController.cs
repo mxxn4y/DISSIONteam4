@@ -53,7 +53,6 @@ public class EnemyController : MonoBehaviour
             else if (dist <= traceDist)
             {
                 curState = CurrentState.trace;
-                StopCoroutine(Roaming());
             }
             else
             {
@@ -68,13 +67,14 @@ public class EnemyController : MonoBehaviour
         {
             switch (curState)
             {
-                case CurrentState.idle: //멈춤(기본상태 - 배회) - 수진
-                    yield return new WaitForSeconds(3f);
+                case CurrentState.idle: //멈춤(기본상태 : 배회) - 수진
+                    int waitTime = Random.Range(7, 10);
+                    yield return new WaitForSeconds(waitTime);
                     curState = CurrentState.roaming;
                     break;
 
-                case CurrentState.roaming:
-                    StartCoroutine(Roaming());
+                case CurrentState.roaming: //배회
+                    Roaming();
                     break;
 
                 case CurrentState.trace: //추적
@@ -113,35 +113,25 @@ public class EnemyController : MonoBehaviour
     }
 
     //몬스터 배회 코드 - 수진
-    IEnumerator Roaming()
+    private void Roaming()
     {
-        while (true)
+        float dist = Vector3.Distance(playerTransform.position, _transform.position);
+
+        Vector3 randomPosition = GetRandomRoamingPosition();
+
+        // 걷는 애니메이션 true
+        transform.LookAt(randomPosition);
+        nvAgent.destination = randomPosition;
+
+        if (dist <= traceDist)
         {
-            //float waitTime = Random.Range(5f, 7f);
-            //yield return new WaitForSeconds(waitTime);
-
-            Vector3 randomPosition = GetRandomRoamingPosition();
-            float dist = Vector3.Distance(playerTransform.position, _transform.position);
-
-            if (dist <= traceDist)
-            {
-                curState = CurrentState.trace;
-                StopCoroutine(Roaming());
-                yield break;
-            }
-
-            // 걷는 애니메이션 true
-            while (Vector3.Distance(transform.position, randomPosition) > 0.1f)
-            {
-                transform.LookAt(randomPosition);
-                nvAgent.destination = randomPosition;
-
-                yield return null;
-            }
-
-            // 걷는 애니메이션 false, idle
-            // 걷는 애니메이션 true
+            curState = CurrentState.trace;
+            return;
         }
+
+        // 걷는 애니메이션 false, idle
+        curState = CurrentState.idle;
+
     }
 
     Vector3 GetRandomRoamingPosition()

@@ -23,7 +23,6 @@ public class ObjTracker : MonoBehaviour
     {
         if (Input.GetMouseButton(1))
         {
-            Debug.Log("Click!");
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, aR);
             foreach (Collider hitCollider in hitColliders)
             {

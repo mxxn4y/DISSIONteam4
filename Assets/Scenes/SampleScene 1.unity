@@ -306,6 +306,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 963194228}
+  - {fileID: 1403397574}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -598,7 +599,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93b58db71e9da7449bb02a04aae16bd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
+  cameraForm: {fileID: 27068546}
+  animator: {fileID: 656179443}
   moveSpeed: 5
   jumpPower: 15
   attackSpeed: 5
@@ -638,6 +640,11 @@ Rigidbody:
 --- !u!4 &656179442 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400032, guid: d314a97dbb26b834a882d42db92820bd, type: 3}
+  m_PrefabInstance: {fileID: 596876192}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &656179443 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9500000, guid: d314a97dbb26b834a882d42db92820bd, type: 3}
   m_PrefabInstance: {fileID: 596876192}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &679832395
@@ -1624,12 +1631,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1403397573}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: 3}
+  m_LocalPosition: {x: 0, y: 4, z: 3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 656179442}
-  m_RootOrder: 5
+  m_Father: {fileID: 27068546}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1403397575
 MonoBehaviour:
