@@ -3708,7 +3708,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NpcTalkAv: {fileID: 1127351693}
-  NPCTalkOnButton: {fileID: 0}
+  NPCTalkOnButton: {fileID: 1668859327}
 --- !u!1001 &258274219
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5055,7 +5055,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 326649885}
   m_LocalRotation: {x: -0.014603819, y: 0.98160696, z: -0.17578499, w: -0.07303587}
-  m_LocalPosition: {x: 22, y: 20.1, z: 153.5}
+  m_LocalPosition: {x: 40.1, y: 20.9, z: 95.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -18502,7 +18502,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1190512352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23823,7 +23823,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1529349376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31337,7 +31337,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NpcTalkAv: {fileID: 1067531227}
-  NPCTalkOnButton: {fileID: 0}
+  NPCTalkOnButton: {fileID: 510393500}
 --- !u!1001 &1979527542
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33013,6 +33013,22 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0.45, z: 0}
+--- !u!54 &2062306860
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2062306854}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &2063380041
 GameObject:
   m_ObjectHideFlags: 0
@@ -33025,9 +33041,9 @@ GameObject:
   - component: {fileID: 2063380044}
   - component: {fileID: 2063380043}
   - component: {fileID: 2063380042}
-  - component: {fileID: 2063380047}
   - component: {fileID: 2063380046}
   - component: {fileID: 2063380048}
+  - component: {fileID: 2063380049}
   m_Layer: 0
   m_Name: NPC1
   m_TagString: NPC
@@ -33043,7 +33059,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2063380041}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.5
   m_Height: 2
@@ -33129,19 +33145,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 4
   m_Center: {x: 0, y: 0, z: -0.000000059604645}
---- !u!135 &2063380047
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2063380041}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 2
-  m_Center: {x: 0, y: 0, z: -0.000000059604645}
 --- !u!114 &2063380048
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33155,7 +33158,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NpcTalkAv: {fileID: 306151414}
-  NPCTalkOnButton: {fileID: 306151414}
+  NPCTalkOnButton: {fileID: 0}
+--- !u!54 &2063380049
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2063380041}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &2071596578
 PrefabInstance:
   m_ObjectHideFlags: 0
