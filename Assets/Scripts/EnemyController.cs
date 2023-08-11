@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
-    public enum CurrentState { idle, trace, attack, dead };
+    public enum CurrentState { idle, roaming, trace, attack, dead };
     public CurrentState curState = CurrentState.idle; //현재상태
 
     private Transform _transform;
@@ -33,12 +33,10 @@ public class EnemyController : MonoBehaviour
         nvAgent = this.gameObject.GetComponent<NavMeshAgent>();
         //위치 설정 -> 추격
 
-        firstPosition = this.transform.position;
+        StartCoroutine(CheckState());
+        StartCoroutine(CheckStateForAction());
 
-        StartCoroutine(this.CheckState());
-        StartCoroutine(this.CheckStateForAction());
-
-        player = GameObject.Find("Astronaut").GetComponent<PlayerController>();
+        player = GameObject.Find("Player").GetComponent<PlayerController>(); //수진
     }
 
     IEnumerator CheckState() //상태 변경
@@ -69,15 +67,23 @@ public class EnemyController : MonoBehaviour
         {
             switch (curState)
             {
-                case CurrentState.idle: //멈춤
-                    nvAgent.destination = firstPosition;
-                    //nvAgent.Stop();
+                case CurrentState.idle: //멈춤(기본상태 : 배회) - 수진
+                    int waitTime = Random.Range(7, 10);
+                    yield return new WaitForSeconds(waitTime);
+                    curState = CurrentState.roaming;
                     break;
+
+                case CurrentState.roaming: //배회
+                    Roaming();
+                    break;
+
                 case CurrentState.trace: //추적
+                    transform.LookAt(playerTransform.position);
                     nvAgent.destination = playerTransform.position;
-                    //nvAgent.Resume();
                     break;
+
                 case CurrentState.attack: //공격
+                    transform.LookAt(playerTransform.position);
                     if (canAttack)
                     {
                         Attack();
@@ -94,6 +100,8 @@ public class EnemyController : MonoBehaviour
         Debug.Log("공격!  " + this.gameObject.name);
         // 공격
         player.hpNow -= attackPower;
+        //맞는 애니메이션 추가 - 수진
+        player.animator.SetTrigger("Hit");
         Debug.Log("player now hp : " + player.hpNow);
     }
 
@@ -102,5 +110,41 @@ public class EnemyController : MonoBehaviour
         canAttack = false;
         yield return new WaitForSeconds(attackSpeed);
         canAttack = true;
+    }
+
+    //몬스터 배회 코드 - 수진
+    private void Roaming()
+    {
+        float dist = Vector3.Distance(playerTransform.position, _transform.position);
+
+        Vector3 randomPosition = GetRandomRoamingPosition();
+
+        // 걷는 애니메이션 true
+        transform.LookAt(randomPosition);
+        nvAgent.destination = randomPosition;
+
+        if (dist <= traceDist)
+        {
+            curState = CurrentState.trace;
+            return;
+        }
+
+        // 걷는 애니메이션 false, idle
+        curState = CurrentState.idle;
+
+    }
+
+    Vector3 GetRandomRoamingPosition()
+    {
+        firstPosition = this.transform.position;
+        Vector3 randomDirection = new Vector3(Random.Range(-1f, 1f), 0f, Random.Range(-1f, 1f)).normalized;
+        Vector3 newPosition = firstPosition + randomDirection * 3f;
+
+        NavMeshHit navHit;
+        if (NavMesh.SamplePosition(newPosition, out navHit, 1.0f, NavMesh.AllAreas))
+        {
+            return navHit.position;
+        }
+        return newPosition;
     }
 }
