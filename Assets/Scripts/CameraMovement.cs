@@ -5,24 +5,23 @@ using UnityEngine;
 public class CameraMovement : MonoBehaviour
 {
     public Transform followObject;
-    public float speed = 10f;    
-    public float sensitivity = 200f;    // 감도. 변경o
-    public float clampAngleTop = 70f;      // 제한
-    public float clampAngleBottom = -10f;
+    public Transform realCamera;
+
+    public Vector3 dirNormalized;
+    public Vector3 finalDir;
 
     private float rotX;
     private float rotY;
-
-    public Transform realCamera;
-    public Vector3 dirNormalized;
-    public Vector3 finalDir;
-    public float minDistance;
-    public float maxDistance;
+    public float min;
+    public float max;
     public float finalDistance;
+    public float speed = 30f;               // 속도
+    public float sensitivity = 200f;        // 감도. 변경가능
+    public float clampAngleTop = 70f;       // 제한
+    public float clampAngleBottom = 40f;
     public float smoothness = 10f;
 
 
-    // Start is called before the first frame update
     void Start()
     {
         rotX = transform.localRotation.eulerAngles.x;
@@ -32,7 +31,6 @@ public class CameraMovement : MonoBehaviour
         finalDistance = realCamera.localPosition.magnitude;
     }
 
-    //Update is called once per frame
     void Update()
     {
         rotX += -Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;
@@ -49,10 +47,17 @@ public class CameraMovement : MonoBehaviour
         followObject.position, speed * Time.deltaTime);
 
         // TransformPoint (local->world)
-        finalDir = transform.TransformPoint(dirNormalized * maxDistance);
+        finalDir = transform.TransformPoint(dirNormalized * max);
 
-
-        // 장애물인식...도해야할듯..........
+        // 인식
+        RaycastHit hit;
+        if(Physics.Linecast(transform.position, finalDir, out hit))
+        {
+            finalDistance = Mathf.Clamp(hit.distance, min, max);
+        } else
+        {
+            finalDistance = max;
+        }
 
         realCamera.localPosition = Vector3.Lerp(realCamera.localPosition,
             dirNormalized * finalDistance, Time.deltaTime * smoothness);
